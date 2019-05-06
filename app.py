@@ -34,3 +34,61 @@ while(True):
                 hacer_cosas()
         else:
             # RESET DURATION
+
+
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def setPos(self, x, y):
+        self.x = x
+        self.y = y
+
+    def mag(self):
+        return math.hypot(self.x, self.y)
+
+    def getPos(self):
+        return [self.x, self.y]
+
+    def norm(self):
+        ans = [self.x/self.getMng(), self.y/self.getMng()]
+        ansV = Vector(ans[0], ans[1])
+        return ansV
+
+    def addV(self, v):
+        self.x += v.getPos()[0]
+        self.y += v.getPos()[1]
+
+    def subV(self, v):
+        self.x -= v.getPos()[0]
+        self.y -= v.getPos()[1]
+
+    def getAngle(self):
+        if(self.x == 0):
+            if(self.y > 0):
+                return math.pi/2
+            else:
+                return math.pi*3/2
+        ans = math.atan(self.y/self.x)
+        if (self.x < 0):
+            return ans+math.pi
+        return ans
+
+    def scalarMult(self, s):
+        self.x *= s
+        self.y *= s
+
+
+# Physics
+FUEL_CONSTANT = 1
+GRAVITY_CONSTANT = -1
+RESISTANCE_CONSTANT = -0.01
+DIRECTION = new Vector(0, 1)
+
+
+def update(state, fuel):
+    position = new Vector(init_x, init_y)
+    time = 0
+    state[3] += state[5]
+    state[5] += fuel*FUEL_CONSTANT+GRAVITY_CONSTANT
